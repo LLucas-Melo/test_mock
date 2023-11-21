@@ -1,43 +1,20 @@
-import 'dart:async';
-
 import 'package:Mock/api_service.dart';
 import 'package:Mock/produto.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import 'package:uno/uno.dart';
 
-class UnoMock implements Uno {
-  final bool withError;
+class UnoMock extends Mock implements Uno {}
 
-  UnoMock([this.withError = false]);
-  @override
-  Future<Response> get(String url,
-      {Duration? timeout,
-      Map<String, String> params = const {},
-      Map<String, String> headers = const {},
-      ResponseType responseType = ResponseType.json,
-      DownloadCallback? onDownloadProgress,
-      ValidateCallback? validateStatus}) async {
-    if (withError) {
-      throw UnoError('error');
-    }
-    return Response(
-        headers: headers,
-        request: Request(
-            headers: {}, method: '', timeout: Duration.zero, uri: Uri.base),
-        status: 200,
-        data: productListJson);
-  }
-
-  @override
-  noSuchMethod(Invocation invocation) {
-    return super.noSuchMethod(invocation);
-  }
-}
+class ResponseMock extends Mock implements Response {}
 
 void main() {
   test('deve retornar uma lista de Product', () async {
     final uno = UnoMock();
+    final response = ResponseMock();
+    when(() => response.data).thenReturn(productListJson);
+    when(() => uno.get(any())).thenAnswer((_) async => response);
     final service = ApiServices(uno);
 
     expect(
@@ -51,7 +28,8 @@ void main() {
   test(
       'Deve retornar uma lista de Product'
       'vazia quando houver uma falha', () {
-    final uno = UnoMock(true);
+    final uno = UnoMock();
+
     final service = ApiServices(uno);
 
     expect(service.getProducts(), completion([]));

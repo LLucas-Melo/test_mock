@@ -140,6 +140,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mocktail",
+      "rootUri": "file:///C:/Users/lucas.melo/AppData/Local/Pub/Cache/hosted/pub.dev/mocktail-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "node_preamble",
       "rootUri": "file:///C:/Users/lucas.melo/AppData/Local/Pub/Cache/hosted/pub.dev/node_preamble-2.0.2",
       "packageUri": "lib/",
@@ -308,7 +314,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-11-17T18:20:18.476645Z",
+  "generated": "2023-11-21T13:54:23.666697Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }
